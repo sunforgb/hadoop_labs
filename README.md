@@ -49,7 +49,11 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 <configuration>
     <property>
             <name>fs.defaultFS</name>
-            <value>hdfs://192.168.122.8:9000</value>
+            <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+            <name>hadoop.http.staticuser.user</name>
+            <value>user</value>
     </property>
 </configuration>
 ```
