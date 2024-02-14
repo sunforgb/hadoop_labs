@@ -248,18 +248,18 @@ class HDFSClient(cmd.Cmd):
 
     def do_doc(self, line):
         """
-            Available commands:
-    * mkdir <remote_dir>
-    * put <local_file> <remote_dir>
-    * get <remote_file>
-    * append <local_file> <remote_file>
-    * delete <remote_file>
-    * ls [remote_dir]
-    * cd <remote_dir>
-    * lls [local_dir]
-    * lcd <local_dir>
+                Available commands:
+        * mkdir <remote_dir>
+        * put <local_file> <remote_dir>
+        * get <remote_file>
+        * append <local_file> <remote_file>
+        * delete <remote_file>
+        * ls [remote_dir]
+        * cd <remote_dir>
+        * lls [local_dir]
+        * lcd <local_dir>
 
-    For more information type help <command>
+        For more information type help <command>
         """
 
         pass
