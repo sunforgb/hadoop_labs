@@ -18,7 +18,7 @@ class HDFSClient(cmd.Cmd):
         self.pwd = f"http://{base_url}:{base_port}/webhdfs/v1/"
         self.request_param = {"user.name": user}
 
-    def __fix_dots(self, path: str, base: list=[]) -> list:
+    def __fix_dots(self, path: str, base: list = []) -> list:
         for part in path.split("/"):
             if not part or part == ".":
                 continue
@@ -27,7 +27,6 @@ class HDFSClient(cmd.Cmd):
             else:
                 base.append(part)
         return base
-
 
     def _fix_path(self, path: str):
         # absolute paths, just make it
@@ -48,13 +47,13 @@ class HDFSClient(cmd.Cmd):
         spl = self.__fix_dots(path, spl)
         request_url = urljoin(self.base_url, "/".join(spl))
         return request_url
-    
+
     def _fix_local_path(self, path: str):
         path = "" if path is None else path.strip()
         if not path.startswith("/"):
             path = f"{os.getcwd()}/{path}"
         spl = self.__fix_dots(path)
-        return "/"+"/".join(spl)
+        return "/" + "/".join(spl)
 
     def do_exit(self, _):
         """
@@ -107,8 +106,9 @@ class HDFSClient(cmd.Cmd):
             if response.status_code == 201:
                 print("File was created")
             else:
-                print("Error in create_file request, status_code: ", response.status_code)
-        
+                print(
+                    "Error in create_file request, status_code: ", response.status_code
+                )
 
     def do_get(self, remote_path: str) -> bytes:
         """
@@ -168,14 +168,14 @@ class HDFSClient(cmd.Cmd):
         else:
             print("Error in delete_file request, status_code: ", response.status_code)
             return False
-        
-    def _complete_ls(self, objects: list[HDFSObject|LocalFSObject]):
+
+    def _complete_ls(self, objects: list[HDFSObject | LocalFSObject]):
         columns = ["mode", "repl", "owner", "group", "size", "name"]
         lengths = dict(zip(columns, [0] * len(columns)))
         build = {}
         align = {
-            'repl': '>',
-            'size': '>',
+            "repl": ">",
+            "size": ">",
         }
         objs = []
         for item in objects:
@@ -185,7 +185,9 @@ class HDFSClient(cmd.Cmd):
                 tmp[name] = text
                 lengths[name] = max(lengths[name], len(text))
             objs.append(tmp)
-            text = text = ' '.join('{%s:%s%s}' % (i, align.get(i, ''), lengths[i]) for i in columns)
+            text = text = " ".join(
+                "{%s:%s%s}" % (i, align.get(i, ""), lengths[i]) for i in columns
+            )
         for item in objs:
             print(text.format(**item))
 
@@ -236,9 +238,6 @@ class HDFSClient(cmd.Cmd):
             print("Smth went wrong in local ls")
             print(e)
 
-        
-        
-
     def do_lcd(self, local_path: str):
         """
         Usage: lcd <local_dir>
@@ -278,9 +277,9 @@ if __name__ == "__main__":
         description="webhdfs client shell",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("-d", "--url", help="WebHDFS URL")
-    parser.add_argument("-p", "--port", help="WebHDFS port")
-    parser.add_argument("-u", "--user", help="WebHDFS username")
+    parser.add_argument("-d", "--url", help="WebHDFS URL", required=True)
+    parser.add_argument("-p", "--port", help="WebHDFS port", required=True)
+    parser.add_argument("-u", "--user", help="WebHDFS username", required=True)
     args = parser.parse_args()
     try:
         print(args)
