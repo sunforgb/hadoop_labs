@@ -185,7 +185,7 @@ class HDFSClient(cmd.Cmd):
                 tmp[name] = text
                 lengths[name] = max(lengths[name], len(text))
             objs.append(tmp)
-            text = text = " ".join(
+            text = " ".join(
                 "{%s:%s%s}" % (i, align.get(i, ""), lengths[i]) for i in columns
             )
         for item in objs:

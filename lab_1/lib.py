@@ -48,12 +48,6 @@ class HDFSObject():
         }
         self.info["mode"] = perm_to_mode(self.info["perm"])
     
-    def __getstate__(self) -> object:
-        return {"path": self.path, "bits": self.bits}
-    
-    def __setstate__(self,args):
-        self.__init__(**args)
-    
     def __str__(self):
         return self.full_name
     
