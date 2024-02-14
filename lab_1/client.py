@@ -218,6 +218,7 @@ class HDFSClient(cmd.Cmd):
         Change current work directory in HDFS.
         """
         self.pwd = self._fix_path(remote_path)
+        print("Current hdfs workdir: ",self.pwd)
 
     def do_lls(self, local_path: str):
         """
