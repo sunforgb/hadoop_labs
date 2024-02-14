@@ -247,7 +247,7 @@ class HDFSClient(cmd.Cmd):
         os.chdir(local_path)
 
     def do_doc(self, line):
-        help_message = """
+        """
             Available commands:
     * mkdir <remote_dir>
     * put <local_file> <remote_dir>
@@ -261,7 +261,8 @@ class HDFSClient(cmd.Cmd):
 
     For more information type help <command>
         """
-        print(help_message.strip())
+
+        pass
 
 
 def main(url: str, port: str, user: str):
