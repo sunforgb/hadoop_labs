@@ -16,7 +16,7 @@ class HDFSClient(cmd.Cmd):
         self.base_url = f"http://{base_url}:{base_port}/webhdfs/v1/"
         # context path
         self.pwd = f"http://{base_url}:{base_port}/webhdfs/v1/"
-        self.request_params = {"user.name": user}
+        self.request_param = {"user.name": user}
 
     def __fix_dots(self, path: str, base: list=[]) -> list:
         for part in path.split("/"):
@@ -75,7 +75,7 @@ class HDFSClient(cmd.Cmd):
 
          Creates remote directory
         """
-        request_param = {"op": "MKDIRS"}
+        request_param = dict({"op": "MKDIRS"}, **self.request_param)
         response = requests.put(self._fix_path(remote_path), params=request_param)
         if response.status_code == 200:
             print("directory was created!")
@@ -89,7 +89,7 @@ class HDFSClient(cmd.Cmd):
         Upload local file into remote directory
         """
         local_path, remote_path = input_line.split()
-        request_param = {"op": "CREATE", "overwrite": True}
+        request_param = dict({"op": "CREATE", "overwrite": True}, **self.request_param)
         response = requests.put(
             self._fix_path(remote_path), params=request_param, allow_redirects=False
         )
@@ -116,7 +116,7 @@ class HDFSClient(cmd.Cmd):
 
         Download remote file from HDFS and save in current local directory
         """
-        request_param = {"op": "OPEN"}
+        request_param = dict({"op": "OPEN"}, **self.request_param)
         response = requests.get(
             self._fix_path(remote_path), params=request_param, allow_redirects=True
         )
@@ -134,7 +134,7 @@ class HDFSClient(cmd.Cmd):
         Append local file to remote file
         """
         local_path, remote_path = input_line.split(" ")
-        request_param = {"op": "APPEND"}
+        request_param = dict({"op": "APPEND"}, **self.request_param)
         response = requests.post(
             self._fix_path(remote_path), params=request_param, allow_redirects=False
         )
@@ -161,13 +161,14 @@ class HDFSClient(cmd.Cmd):
 
         Delete remote file
         """
-        request_param = {"op": "DELETE"}
+        request_param = dict({"op": "DELETE"}, **self.request_param)
         response = requests.delete(self._fix_path(remote_path), params=request_param)
         if response.status_code == 200:
             print("Remote file was deleted")
         else:
             print("Error in delete_file request, status_code: ", response.status_code)
             return False
+        
     def _complete_ls(self, objects: list[HDFSObject|LocalFSObject]):
         columns = ["mode", "repl", "owner", "group", "size", "name"]
         lengths = dict(zip(columns, [0] * len(columns)))
@@ -195,7 +196,7 @@ class HDFSClient(cmd.Cmd):
         List remote directory. If remote dir not provided, then list current dir.
         """
         objects = []
-        request_param = {"op": "LISTSTATUS"}
+        request_param = dict({"op": "LISTSTATUS"}, **self.request_param)
         path = self._fix_path(remote_path)
         response = requests.get(path, params=request_param)
         if response.status_code == 200:
