@@ -1,0 +1,4 @@
+http://website1	0.09375;http://website2 http://website4
+http://website2	0.140625;http://website3
+http://website3	0.15625;http://website1 http://website2
+http://website4	0.609375;

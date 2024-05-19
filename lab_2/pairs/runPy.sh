@@ -8,7 +8,6 @@ yarn jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
 -input pairs/input/ \
 -output pairs/output/ \
 -mapper `pwd`/countMap.py \
--combiner `pwd`/countReduce.py \
 -reducer `pwd`/countReduce.py
 
 hdfs dfs -cat pairs/output/part-00000

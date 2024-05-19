@@ -1,0 +1,4 @@
+http://website1	0.25;http://website2 http://website4
+http://website2	0.25;http://website3
+http://website3	0.25;http://website1 http://website2
+http://website4	0.25;http://website1

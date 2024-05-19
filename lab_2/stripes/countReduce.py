@@ -21,12 +21,3 @@ for line in sys.stdin:
             result[key] = result.get(key, 0) + value[key]
 if lastToken is not None:
     prnt(lastToken, result)
-#     if not arr.get((token, joken), None):
-#         arr[(token, joken)] = int(value)
-#     else:
-#         arr[(token, joken)] = arr.get((token,joken)) + int(value)
-
-# for item in list(arr.items()):
-#     token, value = item[0], item[1]
-#     token, joken = token[0], token[1]
-#     print(token, joken, value, sep=":")

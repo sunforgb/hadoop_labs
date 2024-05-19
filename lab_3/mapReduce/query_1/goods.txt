@@ -1,0 +1,10 @@
+1,Apple,10
+2,Cucumber,20
+3,Banana,30
+4,Orange,25
+5,Mango,70
+6,Peach,45
+7,Lemon,5
+8,Kiwi,75
+9,Pear,15
+10,Pineapple,100
